@@ -14,6 +14,8 @@
 
 // 用于显示deque的函数模板
 template <typename T>
+// const std::deque<T> &d 中的 & 符号表示引用。
+//它表示参数 d 是一个对 std::deque<T> 类型对象的引用
 void display(const std::deque<T> &d)
 {
     std::cout << "[ ";
