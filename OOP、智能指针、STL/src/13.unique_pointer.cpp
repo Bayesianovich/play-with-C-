@@ -2,32 +2,33 @@
 #include <vector>
 #include <string>
 #include <memory>
-
 using namespace std;
 
-class Account
+class Account 
 {
 private:
     string name {"account"};
     double balance {0.0};
+
 public:
-    Account(string name = "none", double balance = 0.0);
+    Account(string name="none",double balance=0.0);
     ~Account();
     bool deposit(double amount);
     void printInfo() const;
     double getBalance();
 };
 
-Account::Account(string name, double balance)
-    :name {name}, balance {balance}
+Account::Account(string name,double balance)
+    :name{name},balance{balance}
 {
-    cout << "构造函数，name: " << name << endl;
+    cout << "Account constructor called"<<name << endl;
 }
 
 Account::~Account()
 {
-    cout << "析构函数，name: " << name << endl;
+    cout << "Account destructor called" << name <<endl;
 }
+
 bool Account::deposit(double amount)
 {
     balance += amount;
@@ -36,45 +37,33 @@ bool Account::deposit(double amount)
 
 void Account::printInfo() const
 {
-    cout << "name: " << name << ", balance: " << balance << endl;
+    cout << "Account name: " << name << " balance: " << balance << endl;
 }
+
 double Account::getBalance()
 {
     return balance;
 }
 
-int main()
-{
-    
-    // Account alice_account {"Alice", 1000.0}; // 构造函数和析构函数都会被调用
+int main(){
+    vector<unique_ptr<Account>>accounts;
+    accounts.push_back(make_unique<Account>("account1",1000));
+    accounts.push_back(make_unique<Account>("account2",2000));
+    accounts.push_back(make_unique<Account>("account3",3000));
 
-    // Account * bob_account = new Account {"Bob", 2000.0}; // 只有构造函数被调用
-    // delete bob_account; // 析构函数被调用
-
-    // unique_ptr<Account> p1 {new Account {"jams", 1000.0}}; // 构造函数和析构函数都会被调用
-
-    // auto p2 = make_unique<Account>("mike", 2000.0); // 构造函数和析构函数都会被调用
-    // unique_ptr<Account> p3;
-
-    // // p3 = p2; // 报错，因为unique_ptr不允许拷贝，只能移动
-    // p3 = move(p2); // p2 会被置为null
-
-    // if (! p2)
-    //     cout << "p2 is null" << endl;
-
-    // auto p4 = make_unique<Account>("Helen", 3000.0);
-    // p4->deposit(1000.0);
-    // p4->printInfo(); // 调用成员函数
-
-    vector<unique_ptr<Account>> accounts;
-    accounts.push_back( make_unique<Account>("alice",1000));
-    accounts.push_back( make_unique<Account>("bob",500));
-    accounts.push_back( make_unique<Account>("mike",1000));
-
-    for (const auto &acc: accounts) 
+    for (const auto &acc:accounts)
         cout << acc->getBalance() << endl;
-
-
-
+    
     return 0;
-}
+    }
+
+// 使用 unique_ptr 和 make_unique 的目的是为了管理动态分配的 Account 对象，
+// 并确保在适当的时候释放内存，以避免内存泄漏。
+
+// unique_ptr 是C++11引入的智能指针，它提供了独占所有权的语义，
+// 即同一时间只能有一个 unique_ptr 指向一个对象。
+// 当 unique_ptr 超出作用域或被销毁时，它所管理的对象会被自动释放。
+
+// make_unique 是C++14引入的函数模板，用于动态分配并初始化一个对象，
+// 并返回一个对应的 unique_ptr。它可以避免显式地使用 new 和 delete，
+// 从而减少内存泄漏的风险。

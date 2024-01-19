@@ -1,6 +1,6 @@
 #include <iostream>
-#include <string>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -8,50 +8,31 @@ template <typename T>
 class Item
 {
 private:
-    std::string name;
+    string name;
     T value;
 
 public:
-    Item(std::string name, T value)
-        : name{name}, value{value}
+    Item(string name, T value): name{name}, value{value}
     {
     }
-    std::string get_name() const { return name; }
+
+    string get_name() const { return name; }
     T get_value() const { return value; }
 };
 
-template <typename T1, typename T2>
-struct My_pair
+template <typename T1,typename T2>
+struct My_Pair
 {
     T1 first;
     T2 second;
 };
 
-int main()
-{
-    // Item<int> item1{"alice", 100};
-    // cout << item1.get_name() << " " << item1.get_value() << endl;
+int main(){
+    My_Pair<string,int> p1{"Frank",100};
+    My_Pair<int,double> p2{124,13.5};
 
-    // Item<string> item2{"bob", "C++"};
-    // cout << item2.get_name() << " " << item2.get_value() << endl;
-
-    // Item<Item<string>> item3{"carol", {"david", "C++"}};
-    // cout << item3.get_name() << " " << item3.get_value().get_name() << " " << item3.get_value().get_value() << endl;
-
-    // vector<Item<double>> vec;
-    // vec.push_back(Item<double>("Frank", 100.0));
-    // vec.push_back(Item<double>("George", 200.0));
-    // vec.push_back(Item<double>("Harry", 300.0));
-
-    // for (const auto &item : vec)
-    //     cout << item.get_name() << " " << item.get_value() << endl;
-
-    cout << "=====================" << endl;
-    My_pair<std::string, int> p1{"hello", 100};
-    My_pair<int, double> p2{200, 3.14};
-
-    cout << p1.first << " " << p1.second << endl;
-    cout << p2.first << " " << p2.second << endl;
+    cout<<p1.first<<" "<<p1.second<<endl;
+    cout<<p2.first<<" "<<p2.second<<endl;
 
     return 0;
 }

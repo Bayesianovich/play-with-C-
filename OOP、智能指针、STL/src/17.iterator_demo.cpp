@@ -11,124 +11,105 @@ std::map<int, int>::iterator it;
 std::set<int>::iterator it;
 
 */
+
 #include <iostream>
 #include <vector>
-#include <set>
-#include <map>
 #include <list>
+#include <map>
+#include <set>
 
-// 打印vector元素
-void printVec(const std::vector<int> &v)
+void printVector(std::vector<int> &v)
 {
-    std::cout << "[";
-    for (const auto &e : v)
-        std::cout << e << " ";
+    std::cout <<"[";
+    for (const auto &it : v)
+    {
+        std::cout << it << " ";
+    }
     std::cout << "]" << std::endl;
 }
 
-void test1()
-{
-    std::cout << "test1 ======================" << std::endl;
+void test1(){
+    std::cout << "test1===========" << std::endl;
     std::vector<int> v1 {1, 2, 3, 4, 5};
-    std::vector<int>::iterator it =  v1.begin(); // 指向第一个元素
+    std::vector<int>::iterator it = v1.begin();
     std::cout << *it << std::endl;
 
-    it++; // 指向第二个元素
+    it++;
     std::cout << *it << std::endl;
 
-    it += 2; // 指向第四个元素
+    it = it + 2;
     std::cout << *it << std::endl;
 
-    it -= 2; // 指向第二个元素
+    it = it - 2;
     std::cout << *it << std::endl;
 
-    it = v1.end() - 1; // 指向最后一个元素，注意end()指向最后一个元素的下一个位置
+    it = v1.end() - 1;
     std::cout << *it << std::endl;
-    
 }
 
-void test2()
-{
-    std::cout << "test2 ======================" << std::endl;
+void test2(){
+    std::cout << "test2===========" << std::endl;
     std::vector<int> v1 {1, 2, 3, 4, 5};
     auto it = v1.begin();
 
     while (it != v1.end())
     {
-        std::cout << *it << std::endl;
-        it++; // 指向下一个元素
+        std::cout << *it << " ";
+        it++;
     }
+
 
     it = v1.begin();
     while (it != v1.end())
     {
-        *it = 100; // 修改元素值
+        if (*it % 2 == 0)
+        {
+            it = v1.erase(it);
+        }
+        else
+        {
+            it++;
+        }
+    }
+    printVector(v1);
+}
+
+void test3(){
+    std::cout << "test3===========" << std::endl;
+    std::list<int> l1 {1, 2, 3, 4, 5};
+    auto it = l1.rbegin();
+    while (it != l1.rend()) // 修改为 rend()
+    {
+        std::cout << *it << " ";
         it++;
     }
-    printVec(v1);
+    std::cout << std::endl; // 添加换行以清晰输出
 
-}
-
-void test3()
-{
-    std::cout << "test3 ======================" << std::endl;
-    std::vector<int> v1 {1, 2, 3, 4, 5};
-    // std::vector<int>::const_iterator it = v1.begin(); // 常量迭代器，只能读取元素，不能修改元素
-    auto it = v1.cbegin(); // 如果使用auto，需要使用cbegin()函数，返回一个常量迭代器
-
-    while (it != v1.end())
-    {
-        std::cout << *it << std::endl;
-        it++; // 指向下一个元素
-    }
-
-    it = v1.begin(); // 重新指向第一个元素
-    while (it != v1.end())
-    {
-        // *it = 100; // 报错，不能修改元素
-        it++; // 指向下一个元素
-    }
-
-
-}
-
-void test4()
-{
-    std::cout << "test4 ======================" << std::endl;
-    std::vector<int> v1 {1, 2, 3, 4, 5};
-    auto it = v1.rbegin(); // 返回一个反向迭代器，指向最后一个元素
-    while (it != v1.rend()) // rend()指向第一个元素的前一个位置
-    {
-        std::cout << *it << std::endl;
-        it++; // 指向下一个元素
-    }
-
-    std::list<std::string> l1 {"hello", "world", "c++"};
-    auto it2 = l1.rbegin();
+    std::list<std::string> l2 {"hello", "world", "cpp"};
+    auto it2 = l2.rbegin();
     std::cout << *it2 << std::endl;
     it2++;
     std::cout << *it2 << std::endl;
 
     std::map<std::string, std::string> m1 {
-        {"hello", "你好"},
-        {"world", "世界"},
-        {"Computer", "计算机"}
+        {"C", "C language"},
+        {"Rust", "Rust language"},
+        {"Python", "Python language"},
+        {"C++", "C++ language"},
     };
-
     auto it3 = m1.begin();
-
     while (it3 != m1.end())
     {
-        std::cout << it3->first << " : " << it3->second << std::endl;
+        std::cout << it3->first << " " << it3->second << std::endl;
         it3++;
     }
-
+    
 }
+
 int main()
 {
-    // test1();
-    // test2();
-    // test3();
-    test4();
+    test1();
+    test2();
+    test3();
     return 0;
 }
